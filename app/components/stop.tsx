@@ -18,12 +18,7 @@ export default function Stop({
       if (key === "Backspace") setCharNum((prev) => prev - 1);
       const nextKey = cleanedText[charNum];
 
-      const keyMatch =
-        (key === "Enter" && nextKey === "\n") ||
-        (key === " " && nextKey === " ") ||
-        key === nextKey;
-
-      if (keyMatch) {
+      if (key === nextKey) {
         setCharNum((prev) => prev + 1);
       } else {
         console.log("wrong key", key, "next key was", nextKey);
