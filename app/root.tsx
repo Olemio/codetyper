@@ -6,9 +6,9 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-
 import "./tailwind.css";
 import Header from "./components/header";
+import { AuthProvider } from "react-oidc-context";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,6 +23,15 @@ export const links: LinksFunction = () => [
   },
 ];
 
+const cognitoAuthConfig = {
+  authority:
+    "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_Raw62SFjG",
+  client_id: "6qa9g30jeggbngk0ghiaj2va3g",
+  redirect_uri: "http://localhost:5173/",
+  response_type: "code",
+  scope: "phone openid email",
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -32,13 +41,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Header />
+      <AuthProvider {...cognitoAuthConfig}>
+        <body>
+          <Header />
 
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </body>
+      </AuthProvider>
     </html>
   );
 }
