@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Stop({
   text,
   setStarted,
@@ -5,10 +7,43 @@ export default function Stop({
   text: string;
   setStarted: (value: boolean) => void;
 }) {
+  const [charNum, setCharNum] = React.useState(0);
+
+  const cleanedText = React.useMemo(() => {
+    return text.replace(/\s+/g, " ").trim();
+  }, [text]);
+
+  const handleKeyDown = React.useCallback(
+    (key: string) => {
+      if (key === "Backspace") setCharNum((prev) => prev - 1);
+      const nextKey = cleanedText[charNum];
+
+      const keyMatch =
+        (key === "Enter" && nextKey === "\n") ||
+        (key === " " && nextKey === " ") ||
+        key === nextKey;
+
+      if (keyMatch) {
+        setCharNum((prev) => prev + 1);
+      } else {
+        console.log("wrong key", key, "next key was", nextKey);
+      }
+      console.log(charNum);
+    },
+    [cleanedText, charNum]
+  );
+
+  React.useEffect(() => {
+    const listener = (e: KeyboardEvent) => handleKeyDown(e.key);
+    document.addEventListener("keydown", listener);
+    return () => document.removeEventListener("keydown", listener);
+  }, [handleKeyDown]);
+
   return (
     <>
       <div className="flex justify-between w-full px-8">
         <p className="text-purpleLight text-xl">Char per minute: 64</p>
+
         <div className="flex items-center gap-4">
           <button
             className="ml-4 text-2xl text-redMedium"
@@ -18,9 +53,14 @@ export default function Stop({
           </button>
         </div>
       </div>
-      <textarea className="resize-none px-16 py-4 h-full w-full rounded-sm text-xl text-grayMedium bg-purpleDark">
-        {text}
-      </textarea>
+
+      <div className="px-16 py-4 h-full w-full rounded-sm text-xl font-mono bg-purpleDark text-white">
+        <span className="text-greenMedium">
+          {cleanedText.slice(0, charNum)}
+        </span>
+        <span className="animate-pulse text-white mx-[-5.5px]">|</span>
+        <span className="text-gray-400">{cleanedText.slice(charNum)}</span>
+      </div>
     </>
   );
 }
