@@ -1,16 +1,27 @@
 export default function Start({
   text,
   setStarted,
+  setText,
 }: {
   text: string;
   setStarted: (value: boolean) => void;
+  setText: (valse: string) => void;
 }) {
+  const defaultText = `export function useSmartDocContext() {
+    const ctx = React.useContext(smartDocContext);
+    if (!ctx) throw new Error('useSmartDocContext must be used within <Editor />');
+    return ctx;
+}`;
+
   return (
     <>
       <div className="flex justify-between w-full px-8">
         <p className="text-purpleLight text-xl">Paste custom words here...</p>
         <div className="flex items-center gap-4">
-          <button className="bg-purpleLight rounded-xl px-4 py-1">
+          <button
+            className="bg-purpleLight rounded-xl px-4 py-1"
+            onClick={() => setText(defaultText)}
+          >
             Use default text
           </button>
           <button className="bg-purpleLight rounded-xl px-4 py-1">
@@ -24,9 +35,11 @@ export default function Start({
           </button>
         </div>
       </div>
-      <textarea className="resize-none px-16 py-4 h-full w-full rounded-sm text-xl text-grayMedium bg-purpleDark">
-        {text}
-      </textarea>
+      <textarea
+        className="resize-none px-16 py-4 h-full w-full rounded-sm text-xl text-grayMedium bg-purpleDark"
+        onChange={(e) => setText(e.currentTarget.value)}
+        value={text}
+      ></textarea>
     </>
   );
 }
