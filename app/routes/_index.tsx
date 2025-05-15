@@ -57,21 +57,7 @@ export default function Index() {
           <Start text={text} setText={setText} />
         </>
       ) : (
-        <>
-          <div className="flex justify-between w-full px-8">
-            <p className="text-purpleLight text-xl">Char per minute: 64</p>
-
-            <div className="flex items-center gap-4">
-              <button
-                className="ml-4 text-2xl text-redMedium"
-                onClick={() => setStarted(false)}
-              >
-                Stop
-              </button>
-            </div>
-          </div>
-          <Stop text={text} randomize={randomize} />
-        </>
+        <Stop text={text} randomize={randomize} setStarted={setStarted} />
       )}
     </div>
   );
