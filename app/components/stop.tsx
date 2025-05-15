@@ -12,11 +12,9 @@ export default function Stop({
   const [charNum, setCharNum] = React.useState(0);
   const [isWrongKey, setIsWrongKey] = React.useState(false);
   const [elapsedTime, setElapsedTime] = React.useState(0);
-  const [startTime, setStartTime] = React.useState<number | null>(null);
 
   React.useEffect(() => {
     const start = Date.now();
-    setStartTime(start);
 
     const interval = setInterval(() => {
       setElapsedTime((Date.now() - start) / 1000);
@@ -25,7 +23,8 @@ export default function Stop({
     return () => clearInterval(interval);
   }, []);
 
-  const cps = elapsedTime > 0 ? (charNum / elapsedTime).toFixed(2) : "0.00";
+  const wpm =
+    elapsedTime > 0 ? (charNum / 5 / (elapsedTime / 60)).toFixed(2) : "0.00";
 
   const shuffle = (arr: string[]) => {
     const a = [...arr];
@@ -66,7 +65,7 @@ export default function Stop({
   return (
     <>
       <div className="flex justify-between w-full px-8">
-        <p className="text-purpleLight text-xl">Char per second: {cps}</p>
+        <p className="text-purpleLight text-xl">Char per second: {wpm}</p>
 
         <div className="flex items-center gap-4">
           <button
