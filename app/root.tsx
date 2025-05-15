@@ -41,15 +41,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <AuthProvider {...cognitoAuthConfig}>
-        <body>
+      <body>
+        <AuthProvider {...cognitoAuthConfig}>
           <Header />
 
           {children}
           <ScrollRestoration />
           <Scripts />
-        </body>
-      </AuthProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

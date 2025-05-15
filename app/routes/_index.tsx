@@ -2,6 +2,8 @@ import type { MetaFunction } from "@remix-run/node";
 import Start from "../components/start";
 import React from "react";
 import Stop from "../components/stop";
+import { useAuth } from "react-oidc-context";
+import { parseJwt } from "../helpers";
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,6 +13,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const auth = useAuth();
   const [started, setStarted] = React.useState(false);
   const [randomize, setRandomize] = React.useState(false);
 
@@ -21,8 +24,25 @@ export default function Index() {
 }`;
   const [text, setText] = React.useState(defaultText);
 
+  const getDb = React.useCallback(async () => {
+    if (!auth.user?.id_token || !auth.isAuthenticated) return;
+    const tokenPayload = parseJwt(auth.user?.id_token);
+    const userId = tokenPayload?.sub;
+    const email = auth.user.profile.email;
+
+    const response = await fetch("/api/getData", {
+      method: "POST",
+      body: JSON.stringify({ userId, email }),
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+  }, [auth.user?.id_token, auth.isAuthenticated, auth.user?.profile.email]);
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
+      <button onClick={getDb}>getdb</button>
       {!started ? (
         <>
           <div className="flex justify-between w-full px-8">
