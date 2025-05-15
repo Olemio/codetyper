@@ -1,3 +1,4 @@
+import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 export function parseJwt(token: string) {
@@ -16,7 +17,7 @@ export function parseJwt(token: string) {
   }
 }
 
-export function parseFromDynamo(item) {
+export function parseFromDynamo(item: Record<string, AttributeValue>) {
   const unmarshalled = unmarshall(item);
 
   return unmarshalled;
