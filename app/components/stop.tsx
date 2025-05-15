@@ -25,10 +25,15 @@ export default function Stop({
     return () => clearInterval(interval);
   }, []);
 
-  const cpm = elapsedTime > 0 ? (charNum / elapsedTime).toFixed(2) : "0.00";
+  const cps = elapsedTime > 0 ? (charNum / elapsedTime).toFixed(2) : "0.00";
 
-  const shuffle = (words: string[]) => {
-    return words.sort(() => Math.random() - 0.5);
+  const shuffle = (arr: string[]) => {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
   };
 
   const cleanedText = React.useMemo(() => {
@@ -61,7 +66,7 @@ export default function Stop({
   return (
     <>
       <div className="flex justify-between w-full px-8">
-        <p className="text-purpleLight text-xl">Char per minute: 64: {cpm}</p>
+        <p className="text-purpleLight text-xl">Char per second: {cps}</p>
 
         <div className="flex items-center gap-4">
           <button
