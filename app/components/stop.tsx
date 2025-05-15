@@ -2,17 +2,23 @@ import React from "react";
 
 export default function Stop({
   text,
-  setStarted,
+  randomize,
 }: {
   text: string;
-  setStarted: (value: boolean) => void;
+  randomize: boolean;
 }) {
   const [charNum, setCharNum] = React.useState(0);
   const [isWrongKey, setIsWrongKey] = React.useState(false);
 
+  const shuffle = (words: string[]) => {
+    return words.sort(() => Math.random() - 0.5);
+  };
+
   const cleanedText = React.useMemo(() => {
-    return text.replace(/\s+/g, " ").trim();
-  }, [text]);
+    const words = text.trim().split(/\s+/);
+    const finalWords = randomize ? shuffle(words) : words;
+    return finalWords.join(" ");
+  }, [text, randomize]);
 
   const handleKeyDown = React.useCallback(
     (key: string) => {
@@ -37,31 +43,16 @@ export default function Stop({
   }, [handleKeyDown]);
 
   return (
-    <>
-      <div className="flex justify-between w-full px-8">
-        <p className="text-purpleLight text-xl">Char per minute: 64</p>
-
-        <div className="flex items-center gap-4">
-          <button
-            className="ml-4 text-2xl text-redMedium"
-            onClick={() => setStarted(false)}
-          >
-            Stop
-          </button>
-        </div>
-      </div>
-
-      <div className="px-16 py-4 h-full w-full rounded-sm text-xl font-mono bg-purpleDark text-white">
-        <span className="text-gray-500">{cleanedText.slice(0, charNum)}</span>
-        <span
-          className={`mx-[-5.5px] ${
-            isWrongKey ? "text-red-500" : "animate-pulse text-white"
-          }`}
-        >
-          |
-        </span>
-        <span className="text-gray-200">{cleanedText.slice(charNum)}</span>
-      </div>
-    </>
+    <div className="px-16 py-4 h-full w-full rounded-sm text-xl font-mono bg-purpleDark text-white">
+      <span className="text-gray-500">{cleanedText.slice(0, charNum)}</span>
+      <span
+        className={`mx-[-5.5px] ${
+          isWrongKey ? "text-red-500" : "animate-pulse text-white"
+        }`}
+      >
+        |
+      </span>
+      <span className="text-gray-200">{cleanedText.slice(charNum)}</span>
+    </div>
   );
 }
