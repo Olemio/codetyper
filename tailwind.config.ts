@@ -9,6 +9,7 @@ export default {
         purpleMedium: "#3D374C",
         purpleDark: "#2C2835",
         greenMedium: "#B8FA7D",
+        redMedium: "#FA7D7F",
         grayMedium: "#B3B3B3",
       },
       fontFamily: {

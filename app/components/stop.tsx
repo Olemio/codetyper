@@ -1,4 +1,4 @@
-export default function Start({
+export default function Stop({
   text,
   setStarted,
 }: {
@@ -8,19 +8,13 @@ export default function Start({
   return (
     <>
       <div className="flex justify-between w-full px-8">
-        <p className="text-purpleLight text-xl">Paste custom words here...</p>
+        <p className="text-purpleLight text-xl">Char per minute: 64</p>
         <div className="flex items-center gap-4">
-          <button className="bg-purpleLight rounded-xl px-4 py-1">
-            Use default text
-          </button>
-          <button className="bg-purpleLight rounded-xl px-4 py-1">
-            Randomize
-          </button>
           <button
-            className="ml-4 text-2xl text-greenMedium"
-            onClick={() => setStarted(true)}
+            className="ml-4 text-2xl text-redMedium"
+            onClick={() => setStarted(false)}
           >
-            Start
+            Stop
           </button>
         </div>
       </div>
