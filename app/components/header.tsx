@@ -13,22 +13,21 @@ export default function Header() {
     )}`;
   };
 
+  const statusText = auth.isLoading
+    ? "Loading..."
+    : auth.error
+    ? "Please click on signin again, and do not refresh the page..."
+    : auth.isAuthenticated
+    ? auth.user?.profile.email
+    : "Not logged in";
+
   return (
     <header className="flex items-center justify-between px-8 h-20 text-purpleLight bg-purpleDark ">
-      <h1 className="text-3xl ">Code Typer</h1>
+      <h1 className="text-2xl font-mono ">{"<CodeTyper />"}</h1>
 
       <div className="flex gap-4">
-        {auth.isLoading ? (
-          <div className="text-gray-400">Loading...</div>
-        ) : auth.error ? (
-          <div className="text-gray-400">
-            Please click on signin again, and do not refresh the page...
-          </div>
-        ) : auth.isAuthenticated ? (
-          <div className="text-gray-400">{auth.user?.profile.email}</div>
-        ) : (
-          <div className="text-gray-400">Nothing</div>
-        )}
+        <div className="text-gray-400">{statusText}</div>
+
         <div>
           {auth.isAuthenticated ? (
             <button
