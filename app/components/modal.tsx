@@ -1,3 +1,5 @@
+import { formatTime } from "../helpers";
+
 export default function Modal({
   isOpen,
   onClose,
@@ -32,8 +34,8 @@ export default function Modal({
           <div className="flex flex-col gap-4 bg-purpleDark rounded  px-4 py-4 w-1/2">
             <p className="text-lg">WPM: {wpm}</p>
             <p className="text-lg">Acc: {accuracy}%</p>
+            <p className="text-lg">Time: {formatTime(time)}</p>
             <p className="text-lg">Misses: {misClicks}</p>
-            <p className="text-lg">Time: {time}</p>
           </div>
           <div className="flex flex-col gap-2 bg-purpleDark rounded px-4 py-2 w-1/2">
             <p className="text-lg">Text:</p>
