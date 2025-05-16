@@ -55,11 +55,10 @@ export function formatTime(seconds: number) {
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
-  const ms = Math.floor((seconds % 1) * 10);
 
   const padded = (n: number) => n.toString().padStart(2, "0");
 
-  let time = `${secs}.${ms}`;
+  let time = `${secs}`;
 
   if (mins > 0 || hrs > 0) {
     time = `${padded(mins)}:${time}`;

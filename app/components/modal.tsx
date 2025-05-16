@@ -27,16 +27,16 @@ export default function Modal({
         >
           ×
         </button>
-        <h1 className="text-2xl">Result</h1>
-        <div className="flex flex-1">
-          <div className="flex flex-col gap-4 bg-purpleDark rounded w-full px-4 py-4">
+        <h1 className="text-2xl m-auto">Result</h1>
+        <div className="flex flex-1 gap-2">
+          <div className="flex flex-col gap-4 bg-purpleDark rounded  px-4 py-4 w-1/2">
             <p className="text-lg">WPM: {wpm}</p>
             <p className="text-lg">Acc: {accuracy}%</p>
             <p className="text-lg">Misses: {misClicks}</p>
             <p className="text-lg">Time: {time}</p>
           </div>
-          <div className="flex flex-col gap-2 text-purpleLight px-4 py-2 rounded">
-            <p className="text">Text:</p>
+          <div className="flex flex-col gap-2 bg-purpleDark rounded px-4 py-2 w-1/2">
+            <p className="text-lg">Text:</p>
             <p className="text-gray-400 font-mono">{text}</p>
           </div>
         </div>

@@ -13,9 +13,12 @@ export default function StatusStop({
 }) {
   return (
     <div className="flex justify-between w-full px-8">
-      <p className="text-purpleLight text-xl">
-        Char per second: {wpm} {formatTime(elapsedTime)}
-      </p>
+      <div className="flex gap-8">
+        <p className="text-purpleLight text-xl">Words per minute: {wpm}</p>
+        <p className="text-purpleLight text-xl">
+          Time: {formatTime(elapsedTime)}
+        </p>
+      </div>
 
       <div className="flex items-center gap-4">
         <button
