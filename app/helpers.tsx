@@ -51,6 +51,34 @@ export const getDb = async (auth: AuthType) => {
   console.log(data);
 };
 
+export const saveTimeDynamo = async (
+  auth: AuthType,
+  {
+    wpm,
+    misClicks,
+    text,
+    time,
+  }: {
+    wpm: number;
+    misClicks: number;
+    text: string;
+    time: number;
+  }
+) => {
+  if (!auth.user?.id_token || !auth.isAuthenticated) return;
+  const tokenPayload = parseJwt(auth.user?.id_token);
+  const userId = tokenPayload?.sub;
+
+  const response = await fetch("/api/saveTime", {
+    method: "POST",
+    body: JSON.stringify({ userId, wpm, misClicks, text, time }),
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+};
+
 export function formatTime(seconds: number) {
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
