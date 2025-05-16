@@ -7,6 +7,7 @@ import StatusStart from "../components/statusStart";
 import StatusStop from "../components/statusStop";
 import { useAuth } from "react-oidc-context";
 import useTypingSession from "../hooks/useTypingSession";
+import Modal from "../components/modal";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,6 +20,7 @@ export default function Index() {
   const auth = useAuth();
   const [started, setStarted] = React.useState(false);
   const [randomize, setRandomize] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
 
   const defaultText = `export function useSmartDocContext() {
     const ctx = React.useContext(smartDocContext);
@@ -33,10 +35,17 @@ export default function Index() {
     return finalWords.join(" ");
   }, [text, randomize]);
 
-  const { charNum, isWrongKey, wpm, elapsedTime } = useTypingSession(
+  const { charNum, isWrongKey, wpm, elapsedTime, misClicks } = useTypingSession(
     cleanedText,
-    started
+    started,
+    showModal
   );
+
+  React.useEffect(() => {
+    if (charNum === cleanedText.length) {
+      setShowModal(true);
+    }
+  }, [charNum, cleanedText]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
@@ -54,6 +63,17 @@ export default function Index() {
         </>
       ) : (
         <>
+          <Modal
+            isOpen={showModal}
+            onClose={() => {
+              setStarted(false);
+              setShowModal(false);
+            }}
+            wpm={wpm}
+            misClicks={misClicks}
+            time={elapsedTime}
+            text={cleanedText}
+          />
           <StatusStop
             setStarted={setStarted}
             wpm={wpm}

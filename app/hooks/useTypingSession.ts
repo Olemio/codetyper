@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
-export default function useTypingSession(cleanedText: string, active: boolean) {
-  const [charNum, setCharNum] = useState(0);
-  const [isWrongKey, setIsWrongKey] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
+export default function useTypingSession(cleanedText: string, active: boolean, paused: boolean) {
+  const [charNum, setCharNum] = React.useState(0);
+  const [isWrongKey, setIsWrongKey] = React.useState(false);
+  const [elapsedTime, setElapsedTime] = React.useState(0);
+  const [misClicks, setMisClicks] = React.useState(0)
 
-  useEffect(() => {
-    if (!active) return;
+  React.useEffect(() => {
+    if (!active || paused) return;
 
     const start = Date.now();
 
@@ -15,10 +16,10 @@ export default function useTypingSession(cleanedText: string, active: boolean) {
     }, 250);
 
     return () => clearInterval(interval);
-  }, [active]);
+  }, [active, paused]);
 
-  useEffect(() => {
-    if (!active) return;
+  React.useEffect(() => {
+    if (!active || paused) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key;
@@ -29,6 +30,7 @@ export default function useTypingSession(cleanedText: string, active: boolean) {
       } else if (key === next) {
         setCharNum((prev) => prev + 1);
       } else if (!["Shift", "AltGraph", "Control"].includes(key)) {
+        setMisClicks(prev => prev + 1)
         setIsWrongKey(true);
         setTimeout(() => setIsWrongKey(false), 250);
       }
@@ -36,7 +38,7 @@ export default function useTypingSession(cleanedText: string, active: boolean) {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [active, charNum, cleanedText]);
+  }, [active, charNum, cleanedText, paused]);
 
   const wpm =
     elapsedTime > 0 ? (charNum / 5 / (elapsedTime / 60)).toFixed(2) : "0.00";
@@ -47,5 +49,6 @@ export default function useTypingSession(cleanedText: string, active: boolean) {
     isWrongKey,
     elapsedTime,
     wpm,
+    misClicks,
   };
 }
