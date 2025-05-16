@@ -21,13 +21,13 @@ export default function Index() {
   const [started, setStarted] = React.useState(false);
   const [randomize, setRandomize] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
-
   const defaultText = `export function useSmartDocContext() {
     const ctx = React.useContext(smartDocContext);
     if (!ctx) throw new Error('useSmartDocContext must be used within <Editor />');
     return ctx;
 }`;
   const [text, setText] = React.useState(defaultText);
+  const [hasSaved, setHasSaved] = React.useState(false);
 
   const cleanedText = React.useMemo(() => {
     const words = text.trim().split(/\s+/);
@@ -39,10 +39,12 @@ export default function Index() {
     useTypingSession(cleanedText, started, showModal);
 
   React.useEffect(() => {
-    if (charNum === cleanedText.length) {
+    if (charNum === cleanedText.length && !hasSaved) {
       setShowModal(true);
+      setHasSaved(false);
+      saveTimeDynamo(auth, { wpm, misClicks, text, time: elapsedTime });
     }
-  }, [charNum, cleanedText]);
+  }, [charNum, cleanedText, auth, wpm, misClicks, text, elapsedTime, hasSaved]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
