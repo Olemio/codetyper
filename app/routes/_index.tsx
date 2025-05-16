@@ -48,13 +48,8 @@ export default function Index() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
-      <button onClick={() => getDb(auth)}>getdb</button>
-      <button
-        onClick={() =>
-          saveTimeDynamo(auth, { wpm, misClicks, text, time: elapsedTime })
-        }
-      >
-        saveTime
+      <button className="fixed text-white" onClick={() => getDb(auth)}>
+        getdb
       </button>
       {!started ? (
         <>
