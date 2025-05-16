@@ -2,9 +2,11 @@ import type { MetaFunction } from "@remix-run/node";
 import Start from "../components/start";
 import React from "react";
 import Stop from "../components/stop";
-import { useAuth } from "react-oidc-context";
-import { parseJwt } from "../helpers";
+import { getDb, shuffleArray } from "../helpers";
 import StatusStart from "../components/statusStart";
+import StatusStop from "../components/statusStop";
+import { useAuth } from "react-oidc-context";
+import useTypingSession from "../hooks/useTypingSession";
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,25 +27,20 @@ export default function Index() {
 }`;
   const [text, setText] = React.useState(defaultText);
 
-  const getDb = React.useCallback(async () => {
-    if (!auth.user?.id_token || !auth.isAuthenticated) return;
-    const tokenPayload = parseJwt(auth.user?.id_token);
-    const userId = tokenPayload?.sub;
-    const email = auth.user.profile.email;
+  const cleanedText = React.useMemo(() => {
+    const words = text.trim().split(/\s+/);
+    const finalWords = randomize ? shuffleArray(words) : words;
+    return finalWords.join(" ");
+  }, [text, randomize]);
 
-    const response = await fetch("/api/getData", {
-      method: "POST",
-      body: JSON.stringify({ userId, email }),
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-  }, [auth.user?.id_token, auth.isAuthenticated, auth.user?.profile.email]);
+  const { charNum, isWrongKey, wpm, elapsedTime } = useTypingSession(
+    cleanedText,
+    started
+  );
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
-      <button onClick={getDb}>getdb</button>
+      <button onClick={() => getDb(auth)}>getdb</button>
       {!started ? (
         <>
           <StatusStart
@@ -56,7 +53,18 @@ export default function Index() {
           <Start text={text} setText={setText} />
         </>
       ) : (
-        <Stop text={text} randomize={randomize} setStarted={setStarted} />
+        <>
+          <StatusStop
+            setStarted={setStarted}
+            wpm={wpm}
+            elapsedTime={elapsedTime}
+          />
+          <Stop
+            cleanedText={cleanedText}
+            charNum={charNum}
+            isWrongKey={isWrongKey}
+          />
+        </>
       )}
     </div>
   );

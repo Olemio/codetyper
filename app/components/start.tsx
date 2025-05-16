@@ -10,6 +10,6 @@ export default function Start({
       className="resize-none px-16 py-4 h-full w-full rounded-sm text-xl text-gray-400 bg-purpleDark font-mono"
       onChange={(e) => setText(e.currentTarget.value)}
       value={text}
-    ></textarea>
+    />
   );
 }

@@ -1,5 +1,8 @@
 import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { useAuth } from "react-oidc-context";
+
+type AuthType = ReturnType<typeof useAuth>;
 
 export function parseJwt(token: string) {
   try {
@@ -22,3 +25,28 @@ export function parseFromDynamo(item: Record<string, AttributeValue>) {
 
   return unmarshalled;
 }
+
+export const shuffleArray = (arr: string[]) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+export const getDb = async (auth: AuthType) => {
+  if (!auth.user?.id_token || !auth.isAuthenticated) return;
+  const tokenPayload = parseJwt(auth.user?.id_token);
+  const userId = tokenPayload?.sub;
+  const email = auth.user.profile.email;
+
+  const response = await fetch("/api/getData", {
+    method: "POST",
+    body: JSON.stringify({ userId, email }),
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+};
