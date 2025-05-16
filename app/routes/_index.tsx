@@ -4,6 +4,7 @@ import React from "react";
 import Stop from "../components/stop";
 import { useAuth } from "react-oidc-context";
 import { parseJwt } from "../helpers";
+import StatusStart from "../components/statusStart";
 
 export const meta: MetaFunction = () => {
   return [
@@ -45,35 +46,13 @@ export default function Index() {
       <button onClick={getDb}>getdb</button>
       {!started ? (
         <>
-          <div className="flex justify-between w-full px-8">
-            <p className="text-purpleLight text-xl">
-              Paste custom words here...
-            </p>
-            <div className="flex items-center gap-4">
-              <button
-                className="bg-purpleLight text-purpleDark rounded-xl px-4 py-1"
-                onClick={() => setText(defaultText)}
-              >
-                Use default text
-              </button>
-              <button
-                className={`rounded-xl px-4 py-1 ${
-                  randomize
-                    ? "bg-purpleDark text-purpleLight"
-                    : "bg-purpleLight text-purpleDark"
-                }`}
-                onClick={() => setRandomize((prev) => !prev)}
-              >
-                Randomize
-              </button>
-              <button
-                className="ml-4 text-2xl text-greenMedium"
-                onClick={() => setStarted(true)}
-              >
-                Start
-              </button>
-            </div>
-          </div>
+          <StatusStart
+            randomize={randomize}
+            setStarted={setStarted}
+            setRandomize={setRandomize}
+            setText={setText}
+            defaultText={defaultText}
+          />
           <Start text={text} setText={setText} />
         </>
       ) : (
