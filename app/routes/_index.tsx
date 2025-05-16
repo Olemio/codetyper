@@ -11,7 +11,7 @@ import Modal from "../components/modal";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Code Typer" },
+    { title: "<CodeTyper />" },
     { name: "description", content: "Welcome to Code Typer!" },
   ];
 };
