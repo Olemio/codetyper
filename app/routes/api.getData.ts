@@ -1,22 +1,21 @@
-import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { ActionFunctionArgs, json } from "@remix-run/node";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const data = await request.json();
-  console.log(data);
-  //   const userId = data.userId;
-  //   const email = data.email;
+  const userId = data.userId;
+
+  if(!userId) return console.log("Missing userId: ", userId)
 
   const client = new DynamoDBClient({ region: "eu-central-1" });
-
-  const getItem = new GetItemCommand({
+  const command = new ScanCommand({
     TableName: "code-typer",
-    Key: {
-      id: { S: "test-1" },
+    FilterExpression: "userId = :uid",
+    ExpressionAttributeValues: {
+      ":uid": { S: userId },
     },
   });
 
-  const result = await client.send(getItem);
-
-  return json(result.Item);
+  const result = await client.send(command);
+  return json(result.Items ?? []);
 };

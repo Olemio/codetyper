@@ -39,11 +39,10 @@ export const getDb = async (auth: AuthType) => {
   if (!auth.user?.id_token || !auth.isAuthenticated) return;
   const tokenPayload = parseJwt(auth.user?.id_token);
   const userId = tokenPayload?.sub;
-  const email = auth.user.profile.email;
 
   const response = await fetch("/api/getData", {
     method: "POST",
-    body: JSON.stringify({ userId, email }),
+    body: JSON.stringify({ userId }),
   });
 
   const data = await response.json();

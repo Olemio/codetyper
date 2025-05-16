@@ -14,10 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if(!userId || !id) return console.log("Missing time or userId", userId, time)
 
-
-
   const client = new DynamoDBClient({ region: "eu-central-1" });
-
   const putItem = new PutItemCommand({
     TableName: "code-typer",
     Item: {
@@ -31,6 +28,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 
   const result = await client.send(putItem);
-
   return json(result);
 };
