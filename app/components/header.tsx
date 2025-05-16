@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { useAuth } from "react-oidc-context";
 
 export default function Header() {
@@ -24,6 +25,9 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between px-8 h-20 text-purpleLight bg-purpleDark ">
       <h1 className="text-xl font-mono">{"<CodeTyper />"}</h1>
+
+      <Link to="/results">Hello</Link>
+      <Link to="/">Results</Link>
 
       <div className="flex gap-4">
         <div className="text-gray-400">{statusText}</div>

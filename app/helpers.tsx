@@ -47,7 +47,7 @@ export const getDb = async (auth: AuthType) => {
 
   const data = await response.json();
 
-  console.log(data);
+  return data;
 };
 
 export const saveTimeDynamo = async (
