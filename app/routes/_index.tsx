@@ -35,11 +35,8 @@ export default function Index() {
     return finalWords.join(" ");
   }, [text, randomize]);
 
-  const { charNum, isWrongKey, wpm, elapsedTime, misClicks } = useTypingSession(
-    cleanedText,
-    started,
-    showModal
-  );
+  const { charNum, isWrongKey, wpm, elapsedTime, misClicks, reset } =
+    useTypingSession(cleanedText, started, showModal);
 
   React.useEffect(() => {
     if (charNum === cleanedText.length) {
@@ -67,6 +64,7 @@ export default function Index() {
             isOpen={showModal}
             onClose={() => {
               setStarted(false);
+              reset();
               setShowModal(false);
             }}
             wpm={wpm}
@@ -78,6 +76,7 @@ export default function Index() {
             setStarted={setStarted}
             wpm={wpm}
             elapsedTime={elapsedTime}
+            reset={reset}
           />
           <Stop
             cleanedText={cleanedText}

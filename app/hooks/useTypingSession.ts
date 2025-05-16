@@ -13,7 +13,7 @@ export default function useTypingSession(cleanedText: string, active: boolean, p
 
     const interval = setInterval(() => {
       setElapsedTime((Date.now() - start) / 1000);
-    }, 250);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [active, paused]);
@@ -41,8 +41,14 @@ export default function useTypingSession(cleanedText: string, active: boolean, p
   }, [active, charNum, cleanedText, paused]);
 
   const wpm =
-    elapsedTime > 0 ? (charNum / 5 / (elapsedTime / 60)).toFixed(2) : "0.00";
+    Number(elapsedTime > 0 ? (charNum / 5 / (elapsedTime / 60)).toFixed(0) : 0.00);
 
+
+  const reset = () => {
+    setCharNum(0)
+    setElapsedTime(0)
+    setMisClicks(0)
+  }
   return {
     charNum,
     setCharNum,
@@ -50,5 +56,6 @@ export default function useTypingSession(cleanedText: string, active: boolean, p
     elapsedTime,
     wpm,
     misClicks,
+    reset,
   };
 }

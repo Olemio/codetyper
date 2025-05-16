@@ -8,7 +8,7 @@ export default function Modal({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  wpm: string;
+  wpm: number;
   misClicks: number;
   time: number;
   text: string;
@@ -16,7 +16,7 @@ export default function Modal({
   if (!isOpen) return null;
 
   const totalClicks = text.length + misClicks;
-  const accuracy = ((text.length / totalClicks) * 100).toFixed(2);
+  const accuracy = ((text.length / totalClicks) * 100).toFixed(0);
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
