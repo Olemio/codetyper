@@ -1,8 +1,9 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useAuth } from "react-oidc-context";
 
 export default function Header() {
   const auth = useAuth();
+  const location = useLocation();
 
   const signOutRedirect = () => {
     const clientId = "6qa9g30jeggbngk0ghiaj2va3g";
@@ -20,31 +21,41 @@ export default function Header() {
     ? "Please click on signin again, and do not refresh the page..."
     : auth.isAuthenticated
     ? auth.user?.profile.email
-    : "Not logged in";
+    : "";
 
   return (
     <header className="flex items-center justify-between px-8 h-20 text-purpleLight bg-purpleDark ">
       <h1 className="text-xl font-mono">{"<CodeTyper />"}</h1>
 
-      <Link to="/results">Hello</Link>
-      <Link to="/">Results</Link>
-
       <div className="flex gap-4">
-        <div className="text-gray-400">{statusText}</div>
+        <div className="flex gap-4">
+          <div className="text-gray-400 capitalize">
+            {statusText?.split("@")[0]}
+          </div>
 
-        <div>
-          {auth.isAuthenticated ? (
-            <button
-              onClick={() => {
-                signOutRedirect();
-                auth.removeUser();
-              }}
-            >
-              Sign out
-            </button>
-          ) : (
-            <button onClick={() => auth.signinRedirect()}>Sign in</button>
-          )}
+          <div>
+            {auth.isAuthenticated ? (
+              <button
+                className="text-gray-400"
+                onClick={() => {
+                  signOutRedirect();
+                  auth.removeUser();
+                }}
+              >
+                Sign out
+              </button>
+            ) : (
+              <button onClick={() => auth.signinRedirect()}>Sign in</button>
+            )}
+          </div>
+          <div>
+            {location.pathname === "/" && auth.isAuthenticated && (
+              <Link to="/results">Results</Link>
+            )}
+            {location.pathname === "/results" && auth.isAuthenticated && (
+              <Link to="/">Home</Link>
+            )}
+          </div>
         </div>
       </div>
     </header>

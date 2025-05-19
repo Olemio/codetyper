@@ -34,10 +34,10 @@ export default function Results() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center my-8">
-      <div className="flex text-purpleLight text-xl mb-8">Previous results</div>
+    <div className="flex flex-col items-center my-8 mx-4 text-purpleLight">
+      <div className="flex text-xl mb-8">Previous results</div>
 
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-4">
         {results.map((result) => (
           <button
             key={result.id}
@@ -45,7 +45,7 @@ export default function Results() {
               setModalData(result);
               setShowModal(true);
             }}
-            className="bg-purpleDark text-purpleLight px-6 py-4 rounded max-w-56 flex flex-col gap-4"
+            className="bg-purpleDark px-6 py-4 rounded max-w-56 flex flex-col flex-1 gap-4"
           >
             <p className="flex gap-2">
               <p>Time</p>
