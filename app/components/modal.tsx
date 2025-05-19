@@ -21,8 +21,14 @@ export default function Modal({
   const accuracy = ((text.length / totalClicks) * 100).toFixed(0);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
-      <div className="flex flex-col gap-4 bg-purpleMedium text-purpleLight p-6 rounded w-[70%] h-[60%] shadow-lg relative">
+    <button
+      onClick={onClose}
+      className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center"
+    >
+      <button
+        onClick={(e) => e.stopPropagation()}
+        className="flex flex-col gap-4 bg-purpleMedium text-purpleLight p-6 rounded w-[70%] h-[60%] shadow-lg relative cursor-default"
+      >
         <button
           onClick={onClose}
           className="absolute top-2 right-4 text-2xl text-gray-400"
@@ -54,7 +60,7 @@ export default function Modal({
             <p className="text-gray-400 font-mono">{text}</p>
           </div>
         </div>
-      </div>
-    </div>
+      </button>
+    </button>
   );
 }
