@@ -49,11 +49,11 @@ export default function Header() {
             )}
           </div>
           <div className="flex gap-2">
-            {location.pathname !== "/results" && auth.isAuthenticated && (
-              <Link to="/results">Results</Link>
-            )}
             {location.pathname !== "/" && auth.isAuthenticated && (
               <Link to="/">Home</Link>
+            )}
+            {location.pathname !== "/results" && auth.isAuthenticated && (
+              <Link to="/results">Results</Link>
             )}
             {location.pathname !== "/leaderboard" && auth.isAuthenticated && (
               <Link to="/leaderboard">Leaderboard</Link>

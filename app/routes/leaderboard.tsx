@@ -53,7 +53,7 @@ export default function Results() {
                 (b.time > 15 ? 15 : b.time) -
                 (a.wpm + (a.time > 15 ? 15 : a.time))
             )
-            .slice(0, 15)
+            .slice(0, 6)
             .map((result, i) => (
               <button
                 key={result.id}
