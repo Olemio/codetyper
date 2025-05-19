@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import Start from "../components/start";
 import React from "react";
 import Stop from "../components/stop";
-import { getDb, saveTimeDynamo, shuffleArray } from "../helpers";
+import { saveTimeDynamo, shuffleArray } from "../helpers";
 import StatusStart from "../components/statusStart";
 import StatusStop from "../components/statusStop";
 import { useAuth } from "react-oidc-context";
@@ -48,9 +48,6 @@ export default function Index() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
-      <button className="fixed text-white" onClick={() => getDb(auth)}>
-        getdb
-      </button>
       {!started ? (
         <>
           <StatusStart

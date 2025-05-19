@@ -35,7 +35,7 @@ export const shuffleArray = (arr: string[]) => {
   return a;
 };
 
-export const getDb = async (auth: AuthType) => {
+export const getUserDB = async (auth: AuthType) => {
   if (!auth.user?.id_token || !auth.isAuthenticated) return;
   const tokenPayload = parseJwt(auth.user?.id_token);
   const userId = tokenPayload?.sub;
@@ -43,6 +43,16 @@ export const getDb = async (auth: AuthType) => {
   const response = await fetch("/api/getData", {
     method: "POST",
     body: JSON.stringify({ userId }),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
+export const getAllUsersDB = async () => {
+  const response = await fetch("/api/getAllUsers", {
+    method: "POST",
   });
 
   const data = await response.json();
@@ -67,10 +77,11 @@ export const saveTimeDynamo = async (
   if (!auth.user?.id_token || !auth.isAuthenticated) return;
   const tokenPayload = parseJwt(auth.user?.id_token);
   const userId = tokenPayload?.sub;
+  const email = auth.user.profile.email;
 
   const response = await fetch("/api/saveTime", {
     method: "POST",
-    body: JSON.stringify({ userId, wpm, misClicks, text, time }),
+    body: JSON.stringify({ userId, wpm, misClicks, text, time, email }),
   });
 
   const data = await response.json();

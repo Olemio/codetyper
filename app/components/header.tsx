@@ -48,12 +48,15 @@ export default function Header() {
               <button onClick={() => auth.signinRedirect()}>Sign in</button>
             )}
           </div>
-          <div>
-            {location.pathname === "/" && auth.isAuthenticated && (
+          <div className="flex gap-2">
+            {location.pathname !== "/results" && auth.isAuthenticated && (
               <Link to="/results">Results</Link>
             )}
-            {location.pathname === "/results" && auth.isAuthenticated && (
+            {location.pathname !== "/" && auth.isAuthenticated && (
               <Link to="/">Home</Link>
+            )}
+            {location.pathname !== "/leaderboard" && auth.isAuthenticated && (
+              <Link to="/leaderboard">Leaderboard</Link>
             )}
           </div>
         </div>

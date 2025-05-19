@@ -1,5 +1,5 @@
 import { useAuth } from "react-oidc-context";
-import { formatTime, getDb, parseFromDynamo } from "../helpers";
+import { formatTime, getUserDB, parseFromDynamo } from "../helpers";
 import React from "react";
 import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import Modal from "../components/modal";
@@ -22,7 +22,7 @@ export default function Results() {
   );
 
   const handleGetResults = async () => {
-    const dbData = await getDb(auth);
+    const dbData = await getUserDB(auth);
     const parsedData = dbData.map((item: Record<string, AttributeValue>) =>
       parseFromDynamo(item)
     );
@@ -38,31 +38,37 @@ export default function Results() {
       <div className="flex text-xl mb-8">Previous results</div>
 
       <div className="flex flex-wrap justify-center gap-4">
-        {results.map((result) => (
-          <button
-            key={result.id}
-            onClick={() => {
-              setModalData(result);
-              setShowModal(true);
-            }}
-            className="bg-purpleDark px-6 py-4 rounded max-w-56 flex flex-col flex-1 gap-4"
-          >
-            <p className="flex gap-2">
-              <p>Time</p>
-              <p className="font-mono text-gray-400">
-                {formatTime(result.time)}
+        {results.length === 0 ? (
+          <p>Nothing here yet...</p>
+        ) : (
+          results.map((result) => (
+            <button
+              key={result.id}
+              onClick={() => {
+                setModalData(result);
+                setShowModal(true);
+              }}
+              className="bg-purpleDark px-6 py-4 rounded max-w-56 flex flex-col flex-1 gap-4"
+            >
+              <p className="flex gap-2">
+                <p>Time</p>
+                <p className="font-mono text-gray-400">
+                  {formatTime(result.time)}
+                </p>
               </p>
-            </p>
-            <p className="flex gap-2">
-              <p>WPM</p>
-              <p className="font-mono text-gray-400">{result.wpm}</p>
-            </p>
-            <p className="flex gap-2">
-              <p>Text</p>
-              <p className="font-mono text-gray-400 truncate">{result.text}</p>
-            </p>
-          </button>
-        ))}
+              <p className="flex gap-2">
+                <p>WPM</p>
+                <p className="font-mono text-gray-400">{result.wpm}</p>
+              </p>
+              <p className="flex gap-2">
+                <p>Text</p>
+                <p className="font-mono text-gray-400 truncate">
+                  {result.text}
+                </p>
+              </p>
+            </button>
+          ))
+        )}
       </div>
       {modalData && (
         <Modal
