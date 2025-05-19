@@ -13,16 +13,22 @@ export default function StatusStop({
 }) {
   return (
     <div className="flex justify-between w-full px-8">
-      <div className="flex gap-8">
-        <p className="text-purpleLight text-xl">Words per minute: {wpm}</p>
-        <p className="text-purpleLight text-xl">
-          Time: {formatTime(elapsedTime)}
+      <div className="flex items-center gap-4">
+        <p className="flex gap-2">
+          Words per minute{" "}
+          <span className="text-gray-400 font-mono">{wpm}</span>
+        </p>
+        <p className="flex gap-2">
+          Time{" "}
+          <span className="text-gray-400 font-mono">
+            {formatTime(elapsedTime)}
+          </span>
         </p>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div>
         <button
-          className="ml-4 text-2xl text-redMedium"
+          className="text-redMedium"
           onClick={() => {
             reset();
             setStarted(false);
