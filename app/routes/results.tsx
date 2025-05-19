@@ -1,5 +1,5 @@
 import { useAuth } from "react-oidc-context";
-import { getDb, parseFromDynamo } from "../helpers";
+import { formatTime, getDb, parseFromDynamo } from "../helpers";
 import React from "react";
 import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import Modal from "../components/modal";
@@ -17,6 +17,9 @@ export default function Results() {
     }[]
   >([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [modalData, setModalData] = React.useState<(typeof results)[0] | null>(
+    null
+  );
 
   const handleGetResults = async () => {
     const dbData = await getDb(auth);
@@ -31,46 +34,48 @@ export default function Results() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center m-4">
-      <div className="flex text-purpleLight text-xl mb-4">Previous results</div>
+    <div className="flex flex-col items-center my-8">
+      <div className="flex text-purpleLight text-xl mb-8">Previous results</div>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-2">
         {results.map((result) => (
-          <>
-            <button
-              key={result.id}
-              onClick={() => {
-                setShowModal(true);
-              }}
-              className="bg-purpleDark text-purpleLight p-4 rounded max-w-80"
-            >
-              <p className="flex gap-2">
-                <p>WPM:</p> {result.wpm}
+          <button
+            key={result.id}
+            onClick={() => {
+              setModalData(result);
+              setShowModal(true);
+            }}
+            className="bg-purpleDark text-purpleLight px-6 py-4 rounded max-w-56 flex flex-col gap-4"
+          >
+            <p className="flex gap-2">
+              <p>Time</p>
+              <p className="font-mono text-gray-400">
+                {formatTime(result.time)}
               </p>
-              <p className="flex gap-2">
-                <p>Mistakes:</p> {result.mistakes}
-              </p>
-              <p className="flex gap-2">
-                <p>Time:</p> {result.time}
-              </p>
-              <p>
-                <p>Text:</p>
-                <p className="text-gray-400 font-mono">{result.text}</p>
-              </p>
-            </button>
-            <Modal
-              isOpen={showModal}
-              onClose={() => {
-                setShowModal(false);
-              }}
-              wpm={result.wpm}
-              misClicks={result.mistakes}
-              time={result.time}
-              text={result.text}
-            />
-          </>
+            </p>
+            <p className="flex gap-2">
+              <p>WPM</p>
+              <p className="font-mono text-gray-400">{result.wpm}</p>
+            </p>
+            <p className="flex gap-2">
+              <p>Text</p>
+              <p className="font-mono text-gray-400 truncate">{result.text}</p>
+            </p>
+          </button>
         ))}
       </div>
+      {modalData && (
+        <Modal
+          isOpen={showModal}
+          onClose={() => {
+            setShowModal(false);
+          }}
+          wpm={modalData.wpm}
+          misClicks={modalData.mistakes}
+          time={modalData.time}
+          text={modalData.text}
+        />
+      )}
     </div>
   );
 }
