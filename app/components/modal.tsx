@@ -7,6 +7,7 @@ export default function Modal({
   misClicks,
   time,
   text,
+  email,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -14,6 +15,7 @@ export default function Modal({
   misClicks: number;
   time: number;
   text: string;
+  email: string;
 }) {
   if (!isOpen) return null;
 
@@ -27,7 +29,7 @@ export default function Modal({
     >
       <button
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col gap-4 bg-purpleMedium text-purpleLight p-6 rounded w-[70%] h-[60%] shadow-lg relative cursor-default"
+        className="flex flex-col gap-4 bg-purpleDark text-purpleLight p-6 rounded w-[70%] h-[60%] shadow-lg relative cursor-default"
       >
         <button
           onClick={onClose}
@@ -35,7 +37,10 @@ export default function Modal({
         >
           ×
         </button>
-        <h1 className="text-2xl m-auto">Result</h1>
+        <p className="flex gap-4 text-xl m-auto mb-2">
+          <p>User</p>
+          <p className="font-mono text-gray-400">{email}</p>
+        </p>
         <div className="flex flex-1 gap-2">
           <div className="flex flex-col gap-4 bg-purpleDark rounded  px-4 py-4 w-1/2">
             <p className="flex gap-2 text-lg">
@@ -55,9 +60,9 @@ export default function Modal({
               <p className="font-mono text-gray-400">{misClicks}</p>
             </p>
           </div>
-          <div className="flex flex-col gap-2 bg-purpleDark rounded px-4 py-2 w-1/2">
+          <div className="flex flex-col items-start gap-2 rounded px-4 py-2 w-1/2">
             <p className="text-lg">Text</p>
-            <p className="text-gray-400 font-mono">{text}</p>
+            <p className="text-gray-400 font-mono text-start pl-4">{text}</p>
           </div>
         </div>
       </button>

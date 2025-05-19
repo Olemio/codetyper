@@ -14,6 +14,7 @@ export default function Results() {
       mistakes: number;
       text: string;
       time: number;
+      email: string;
     }[]
   >([]);
   const [showModal, setShowModal] = React.useState(false);
@@ -80,6 +81,7 @@ export default function Results() {
           misClicks={modalData.mistakes}
           time={modalData.time}
           text={modalData.text}
+          email={modalData.email}
         />
       )}
     </div>

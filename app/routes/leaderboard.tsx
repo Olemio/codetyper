@@ -98,6 +98,7 @@ export default function Results() {
           misClicks={modalData.mistakes}
           time={modalData.time}
           text={modalData.text}
+          email={modalData.email}
         />
       )}
     </div>

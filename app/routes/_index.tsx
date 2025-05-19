@@ -47,7 +47,7 @@ export default function Index() {
   }, [charNum, cleanedText, auth, wpm, misClicks, text, elapsedTime, hasSaved]);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-12 h-[calc(100vh-80px)] ">
+    <div className="flex flex-col items-center justify-center gap-2 p-8 h-[calc(100vh-80px)] ">
       {!started ? (
         <>
           <StatusStart
@@ -72,6 +72,7 @@ export default function Index() {
             misClicks={misClicks}
             time={elapsedTime}
             text={cleanedText}
+            email={auth.user?.profile.email || "Not quite sure..."}
           />
           <StatusStop
             setStarted={setStarted}

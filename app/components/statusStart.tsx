@@ -13,16 +13,12 @@ export default function StatusStart({
 }) {
   return (
     <div className="flex justify-between w-full px-8">
-      <p className="text-purpleLight text-xl">Paste custom words here...</p>
       <div className="flex items-center gap-4">
-        <button
-          className="bg-purpleLight text-purpleDark rounded-xl px-4 py-1"
-          onClick={() => setText(defaultText)}
-        >
+        <button className="rounded px-2" onClick={() => setText(defaultText)}>
           Use default text
         </button>
         <button
-          className={`rounded-xl px-4 py-1 ${
+          className={`rounded px-2 text-sm ${
             randomize
               ? "bg-purpleDark text-purpleLight"
               : "bg-purpleLight text-purpleDark"
@@ -31,13 +27,10 @@ export default function StatusStart({
         >
           Randomize
         </button>
-        <button
-          className="ml-4 text-2xl text-greenMedium"
-          onClick={() => setStarted(true)}
-        >
-          Start
-        </button>
       </div>
+      <button className="text-greenMedium" onClick={() => setStarted(true)}>
+        Start
+      </button>
     </div>
   );
 }
