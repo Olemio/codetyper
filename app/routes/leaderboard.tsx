@@ -38,7 +38,7 @@ export default function Results() {
       <div className="flex flex-col items-center text-xl mb-8">
         Top 5 Leaderboard{" "}
         <p className="text-gray-400 font-mono text-sm">
-          WPM + Time (Max 15 sec)
+          Score = WPM + Time (Max 15 sec)
         </p>
       </div>
 
