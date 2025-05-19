@@ -24,7 +24,7 @@ export default function Header() {
     : "";
 
   return (
-    <header className="flex items-center justify-between px-8 h-20 text-purpleLight bg-purpleDark ">
+    <header className="flex items-center justify-between px-8 h-16 text-purpleLight bg-purpleDark ">
       <h1 className="text-xl font-mono">{"<CodeTyper />"}</h1>
 
       <div className="flex gap-4">
