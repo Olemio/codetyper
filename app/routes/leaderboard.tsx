@@ -25,7 +25,6 @@ export default function Results() {
     const parsedData = dbData.map((item: Record<string, AttributeValue>) =>
       parseFromDynamo(item)
     );
-    console.log(parsedData);
     setResults(parsedData);
   };
 
@@ -63,14 +62,14 @@ export default function Results() {
                 }}
                 className="flex gap-8 justify-between bg-purpleDark px-6 py-4 rounded w-full max-w-4xl"
               >
-                <p className="flex gap-4">
+                <div className="flex gap-4">
                   <p>{i}.</p>
                   <p>User</p>
                   <p className="font-mono text-gray-400">
                     {result?.email ?? "Test"}
                   </p>
-                </p>
-                <p className="flex gap-4">
+                </div>
+                <div className="flex gap-4">
                   <p>WPM</p>
                   <p className="font-mono text-gray-400">{result.wpm}</p>
                   <p>Time</p>
@@ -83,7 +82,7 @@ export default function Results() {
                       result.wpm + (result.time > 15 ? 15 : result.time)
                     ).toFixed(2)}
                   </p>
-                </p>
+                </div>
               </button>
             ))
         )}

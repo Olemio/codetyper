@@ -12,6 +12,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const text = data.text
   const time = data.time
   const id = randomUUID()
+  const createdAt = new Date().toISOString()
 
   if(!userId || !id || !email || !text) return console.log("Missing time or userId", userId, time)
 
@@ -26,6 +27,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       mistakes: { N: String(misClicks) },
       text: { S: text },
       time: { N: String(time) },
+      createdAt: { S: createdAt },
     },
   });
 

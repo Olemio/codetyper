@@ -5,7 +5,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const data = await request.json();
   const userId = data.userId;
 
-  if(!userId) return console.log("Missing userId: ", userId)
+  if(!userId) {
+    console.log("Missing userId: ", userId)
+    return null
+  }
 
   const client = new DynamoDBClient({ region: "eu-central-1" });
   const command = new ScanCommand({
@@ -17,5 +20,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 
   const result = await client.send(command);
+
   return json(result.Items ?? []);
 };

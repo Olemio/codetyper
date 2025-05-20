@@ -89,6 +89,13 @@ export const saveTimeDynamo = async (
   console.log(data);
 };
 
+export const deleteResult = async (id: string) => {
+  await fetch("/api/deleteItem", {
+    method: "POST",
+    body: JSON.stringify({ id }),
+  });
+};
+
 export function formatTime(seconds: number) {
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
