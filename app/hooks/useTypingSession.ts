@@ -1,5 +1,6 @@
 import React from "react";
 
+// Koden her er for det meste skrevet av meg. Jeg vet ikke hvordan man lager en god custom hook, så jeg har brukt chat gpt til å flytte denne logikken ut fra mine vanlige komponenter. Dette er det største bidraget derifra i prosjektet
 export default function useTypingSession(cleanedText: string, active: boolean, paused: boolean) {
   const [charNum, setCharNum] = React.useState(0);
   const [isWrongKey, setIsWrongKey] = React.useState(false);

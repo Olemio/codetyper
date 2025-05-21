@@ -12,7 +12,7 @@ export default function Stop({
       <span className="text-gray-500">{cleanedText.slice(0, charNum)}</span>
       <span
         className={`mx-[-5.5px] ${
-          isWrongKey ? "text-redMedium" : "animate-pulse"
+          isWrongKey ? "text-redMedium" : "animate-pulse" // idee om cursor blink fra chat gpt. animate-pulse fra chat gpt
         }`}
       >
         |

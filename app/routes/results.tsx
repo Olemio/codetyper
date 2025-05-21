@@ -55,6 +55,7 @@ export default function Results() {
         ) : (
           results
             .sort(
+              // sort er generert av chat gpt
               (a, b) =>
                 new Date(b.createdAt).getTime() -
                 new Date(a.createdAt).getTime()
@@ -87,6 +88,7 @@ export default function Results() {
                 </button>
                 <button
                   onClick={async (e) => {
+                    //stopPropagation er fra chat gpt for å unngå at modal åpnes når en skal slette item
                     e.stopPropagation();
                     await deleteResult(result.id);
                     handleGetResults();

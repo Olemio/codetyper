@@ -23,6 +23,7 @@ export const links: LinksFunction = () => [
   },
 ];
 
+// Kopiert fra AWS
 const cognitoAuthConfig = {
   authority:
     "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_Raw62SFjG",
@@ -32,6 +33,7 @@ const cognitoAuthConfig = {
   scope: "phone openid email",
 };
 
+// AuthProvider er kopiert fra AWS
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

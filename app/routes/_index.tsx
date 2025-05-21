@@ -30,11 +30,12 @@ export default function Index() {
   const [hasSaved, setHasSaved] = React.useState(false);
 
   const cleanedText = React.useMemo(() => {
-    const words = text.trim().split(/\s+/);
+    const words = text.trim().split(/\s+/); // jeg kan ikke trim metoden eller regexen her. skrevet av chat gpt
     const finalWords = randomize ? shuffleArray(words) : words;
     return finalWords.join(" ");
   }, [text, randomize]);
 
+  // opprettet med chat gpt. Senere laget å hentet inn flere variabler selv
   const { charNum, isWrongKey, wpm, elapsedTime, misClicks, reset } =
     useTypingSession(cleanedText, started, showModal);
 

@@ -5,6 +5,7 @@ export default function Header() {
   const auth = useAuth();
   const location = useLocation();
 
+  // Kopiert fra AWS
   const signOutRedirect = () => {
     const clientId = "6qa9g30jeggbngk0ghiaj2va3g";
     const logoutUri = "http://localhost:5173";

@@ -16,6 +16,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if(!userId || !id || !email || !text) return console.log("Missing time or userId", userId, time)
 
+  // putItem laget av chatgpt. senere lagt til resten som ligger i item objektet
   const client = new DynamoDBClient({ region: "eu-central-1" });
   const putItem = new PutItemCommand({
     TableName: "code-typer",

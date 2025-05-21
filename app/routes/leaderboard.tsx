@@ -22,6 +22,7 @@ export default function Results() {
 
   const handleGetResults = async () => {
     const dbData = await getAllUsersDB();
+    // Typen AttributeValue gitt fra chat gpt
     const parsedData = dbData.map((item: Record<string, AttributeValue>) =>
       parseFromDynamo(item)
     );
@@ -47,6 +48,7 @@ export default function Results() {
         ) : (
           results
             .sort(
+              // Jeg har ikke brukt sort så mye før, denne er generert fra chat gpt. Med litt tweaking fra meg i ettertid
               (a, b) =>
                 b.wpm +
                 (b.time > 15 ? 15 : b.time) -

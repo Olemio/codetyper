@@ -19,11 +19,12 @@ export default function Modal({
 }) {
   if (!isOpen) return null;
 
+  // regnet ut med hjelp fra chat gpt
   const totalClicks = text.length + misClicks;
   const accuracy = ((text.length / totalClicks) * 100).toFixed(0);
 
   return (
-    <div
+    <div // triks fra chat gpt for å unngå errormelding
       onClick={onClose}
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();
@@ -32,7 +33,7 @@ export default function Modal({
       role="button"
       className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center"
     >
-      <div
+      <div // triks fra chat gpt for å unngå errormelding
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         tabIndex={0}

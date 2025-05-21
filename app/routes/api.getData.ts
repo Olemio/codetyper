@@ -10,6 +10,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return null
   }
 
+  // Jeg har brukt chat gpt til å lage scan kommandoen
   const client = new DynamoDBClient({ region: "eu-central-1" });
   const command = new ScanCommand({
     TableName: "code-typer",

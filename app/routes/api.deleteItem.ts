@@ -8,6 +8,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if(!itemId) return console.log("Missing itemId", itemId)
 
+  // Jeg har brukt chat gpt for å generere putItem commandoen, og til å lage client
   const client = new DynamoDBClient({ region: "eu-central-1" });
   const putItem = new DeleteItemCommand({
     TableName: "code-typer",
@@ -16,6 +17,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 },
   });
 
+  // chat gpt har triggret send på client objektet
   await client.send(putItem);
   return json({ success: true });
 };

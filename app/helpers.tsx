@@ -2,8 +2,10 @@ import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { useAuth } from "react-oidc-context";
 
+// generert av chat gpt
 type AuthType = ReturnType<typeof useAuth>;
 
+// generert av chat gpt
 export function parseJwt(token: string) {
   try {
     const base64Url = token.split(".")[1];
@@ -20,12 +22,14 @@ export function parseJwt(token: string) {
   }
 }
 
+// generert av chat gpt
 export function parseFromDynamo(item: Record<string, AttributeValue>) {
   const unmarshalled = unmarshall(item);
 
   return unmarshalled;
 }
 
+// generert av chat gpt
 export const shuffleArray = (arr: string[]) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -37,7 +41,7 @@ export const shuffleArray = (arr: string[]) => {
 
 export const getUserDB = async (auth: AuthType) => {
   if (!auth.user?.id_token || !auth.isAuthenticated) return;
-  const tokenPayload = parseJwt(auth.user?.id_token);
+  const tokenPayload = parseJwt(auth.user?.id_token); // forslag fra chat gpt
   const userId = tokenPayload?.sub;
 
   const response = await fetch("/api/getData", {
@@ -96,6 +100,7 @@ export const deleteResult = async (id: string) => {
   });
 };
 
+// generert av chat gpt
 export function formatTime(seconds: number) {
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
