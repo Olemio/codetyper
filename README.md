@@ -119,7 +119,6 @@ npm start
 ## ✅ Status
 
 - Fully working demo (local environment)
-- All planned features implemented
 - Areas for future improvement (e.g., usernames, hosting)
 
 ---
