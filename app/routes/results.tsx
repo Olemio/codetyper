@@ -8,6 +8,14 @@ import {
 import React from "react";
 import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import Modal from "../components/modal";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "<CodeTyper / Results />" },
+    { name: "description", content: "Welcome to Code Typer!" },
+  ];
+};
 
 export default function Results() {
   const auth = useAuth();
