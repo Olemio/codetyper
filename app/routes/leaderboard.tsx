@@ -91,7 +91,7 @@ export default function Results() {
               ))}
             <button
               onClick={() => setLoadNum((prev) => prev + 10)}
-              className="flex gap-8 justify-between bg-purpleDark px-6 py-4 rounded w-full max-w-4xl"
+              className="pt-2 text-grayMedium hover:text-purpleLight"
             >
               Load more...
             </button>
